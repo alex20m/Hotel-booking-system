@@ -13,8 +13,9 @@ class Hotel:
 
     guest_list is a dictionary where the key is the guests phone number, the values are lists, where
     the first element is the guests name, the second is the guests email address.
+
     """
 
     def __init__(self):
         self.hotel_reservations = {}
-        self.guest_list = []
+        self.guest_list = {}
