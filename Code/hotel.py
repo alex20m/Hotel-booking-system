@@ -16,5 +16,5 @@ class Hotel:
     """
 
     def __init__(self):
-        self.hotel_reservations = {} #list with all of the hotels reservations
-        self.guest_list = [] #list with all of the quests that have stayed at the hotel
+        self.hotel_reservations = {}
+        self.guest_list = []
