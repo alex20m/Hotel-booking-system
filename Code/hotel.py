@@ -11,10 +11,10 @@ class Hotel:
     check in date, the third element is checkout date, fourth element is room type and
     fifth element is comments made by guest when booking.
 
-    guest_list is a dictionary where the key is the guests phone number, the values are lists, where
+    hotel_guests is a dictionary where the key is the guests phone number, the values are lists, where
     the first element is the guests name, the second is the guests email address.
     """
 
     def __init__(self):
         self.hotel_reservations = {}
-        self.guest_list = {}
+        self.hotel_guests = {}
