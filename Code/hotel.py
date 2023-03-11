@@ -1,4 +1,6 @@
 from guest import Guest
+from datetime import date
+
 
 class Hotel:
 

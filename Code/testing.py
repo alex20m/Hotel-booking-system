@@ -1,4 +1,5 @@
 import unittest
+from datetime import date
 
 
 class TestReservations(unittest.TestCase):
@@ -7,7 +8,8 @@ class TestReservations(unittest.TestCase):
         pass
 
     def test_reservation_through(self):
-        pass
+        start_date = date(2023, 1, 30)
+
 
     def test_reservation_length(self):
         pass

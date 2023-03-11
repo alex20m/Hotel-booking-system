@@ -1,3 +1,6 @@
+from datetime import date
+
+
 class Reservations:
 
     def __init__(self, guest, start_date, end_date, room_type, comments):
