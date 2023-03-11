@@ -1,4 +1,4 @@
-
+from guest import Guest
 
 class Hotel:
 
