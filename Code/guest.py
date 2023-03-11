@@ -1,5 +1,5 @@
 from datetime import date
-
+from reservations import Reservations
 
 class Guest:
 
