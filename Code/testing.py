@@ -67,3 +67,9 @@ class TestReservations(unittest.TestCase):
     def test_write_to_file(self):
         pass
 
+    def test_printing_interval(self):
+        hotel = Hotel("hotel_reservations_test")
+        start_date = date(2023, 3, 20)
+        end_date = date(2023, 3, 25)
+        retval = hotel.print_reservations_in_interval(start_date, end_date)
+        self.assertEqual(retval, "0442046661, Alex Mecklin, alex.mecklin@hotmail.com, Cheap room, 2023-03-23, 2023-03-26, comments\n")
