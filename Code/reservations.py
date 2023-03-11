@@ -11,11 +11,16 @@ class Reservations:
         self.comments = comments
 
 
+    """
+    Reservation length is in amount of nights.
+    """
     def get_reservation_length(self):
         pass
 
+
     def get_price(self):
         pass
+
 
     def write_file(self):
         pass
