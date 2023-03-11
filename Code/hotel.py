@@ -62,4 +62,16 @@ class Hotel:
         return True
 
     def print_reservations_in_interval(self, start_date, end_date):
-        pass
+        list = []
+        string = ""
+        for reservation in self.hotel_reservations:
+            check_in = reservation[4]
+            check_out = reservation[5]
+            if (start_date <= check_in < end_date) or (start_date < check_out <= end_date): #Then it is in the interval
+                list.append(reservation)
+        for element in list:
+            element[4] = str(element[4])
+            element[5] = str(element[5])
+            string += ", ".join(element)
+            string += "\n"
+        return string
