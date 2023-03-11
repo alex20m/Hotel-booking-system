@@ -39,8 +39,8 @@ class Hotel:
                 room_type = val_split[4]
                 comments = val_split[5]
 
-                guest = Guest(name, phone_nr, email)
                 if phone_nr not in self.hotel_guests:
+                    guest = Guest(name, phone_nr, email)
                     self.hotel_guests[phone_nr] = guest
                 self.hotel_reservations[guest] = [start_date, end_date]
             file.close()
