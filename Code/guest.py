@@ -20,6 +20,10 @@ class Guest:
         return self.name
 
 
+    def read_previous_guest_reservations(self):
+        pass
+
+
     def get_previous_reservations(self):
         return self.guest_reservations
 
