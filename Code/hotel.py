@@ -18,3 +18,12 @@ class Hotel:
     def __init__(self):
         self.hotel_reservations = {}
         self.hotel_guests = {}
+
+    def read_previous_reservations(self):
+        pass
+
+    def check_availability(self, start_date, end_date):
+        pass
+
+    def print_reservations_in_interval(self, start_date, end_date):
+        pass
