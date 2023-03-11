@@ -1,5 +1,9 @@
 from guest import Guest
 from datetime import date
+from cheap_room import CheapRoom
+from normal_room import NormalRoom
+from expensive_room import ExpensiveRoom
+from guest import Guest
 
 
 class Hotel:
@@ -20,6 +24,8 @@ class Hotel:
     def __init__(self):
         self.hotel_reservations = {}
         self.hotel_guests = {}
+        self.cheap_room = CheapRoom()
+
 
     def read_previous_reservations(self):
         pass
