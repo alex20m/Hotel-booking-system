@@ -1,5 +1,7 @@
 import unittest
 from datetime import date
+from reservations import Reservations
+from hotel import Hotel
 
 
 class TestReservations(unittest.TestCase):
@@ -8,17 +10,34 @@ class TestReservations(unittest.TestCase):
         pass
 
     def test_reservation_through(self):
-        start_date = date(2023, 1, 30)
+        start_date = date(2023, 3, 23)
+        end_date = date(2023, 3, 26)
+        room_type = "Cheap room"
 
 
     def test_reservation_length(self):
-        pass
+        start_date = date(2023, 3, 30)
+        end_date = date(2023, 3, 31)
+        guest = "Alex"
+        room_type = "Expensive room"
+        comments = "Champagne bottle in room"
+        reservation = Reservations(guest, start_date, end_date, room_type, comments)
+        self.assertEqual(reservation.get_reservation_length(), 1)
+
 
     def test_price(self):
-        pass
+        start_date = date(2023, 3, 31)
+        end_date = date(2023, 4, 3)
+        guest = "Alex"
+        room_type = "Expensive room"
+        comments = "Champagne bottle in room"
+        reservation = Reservations(guest, start_date, end_date, room_type, comments)
+        self.assertEqual(reservation.get_price(), 90)
 
     def test_read_from_file(self):
-        pass
+        hotel = Hotel()
+        retval = hotel.read_previous_reservations("hotel_reservations")
+        self.assertEqual(retval, True)
 
     def test_write_to_file(self):
         pass
