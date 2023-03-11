@@ -1,4 +1,7 @@
-from datetime import date
+from datetime import date, timedelta
+from cheap_room import CheapRoom
+from normal_room import NormalRoom
+from expensive_room import ExpensiveRoom
 
 
 class Reservations:
@@ -12,14 +15,26 @@ class Reservations:
 
 
     """
-    Reservation length is in amount of nights.
+    Reservation length is in amount of nights. You have to book at least one night.
     """
     def get_reservation_length(self):
-        pass
-
+        return (self.end_date - self.start_date).days
 
     def get_price(self):
-        pass
+
+        if self.room_type == "Cheap room":
+            cheap_room = CheapRoom()
+            price = cheap_room.get_price()
+
+        elif self.room_type == "Normal room":
+            normal_room = NormalRoom()
+            price = normal_room.get_price()
+
+        elif self.room_type == "Expensive room":
+            expensive_room = ExpensiveRoom()
+            price = expensive_room.get_price()
+
+        return price * self.get_reservation_length()
 
 
     def write_file(self):
