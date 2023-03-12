@@ -70,12 +70,22 @@ class TestReservations(unittest.TestCase):
         retval = guest.read_previous_guest_reservations("guest_reservations_test")
         self.assertEqual(retval, [['2023-3-23', '2023-3-26', 'Cheap room'], ['2023-3-15', '2023-3-20', 'Cheap room']])
 
-    def test_write_to_file(self):
-        pass
-
     def test_printing_interval(self):
         hotel = Hotel("hotel_reservations_test")
         start_date = date(2023, 3, 20)
         end_date = date(2023, 3, 25)
         retval = hotel.print_reservations_in_interval(start_date, end_date)
         self.assertEqual(retval, "0442046661, Alex Mecklin, alex.mecklin@hotmail.com, Cheap room, 2023-03-23, 2023-03-26, comments\n")
+
+    def test_make_reservation(self):
+        start_date = date(2023, 3, 10)
+        end_date = date(2023, 3, 15)
+        room_type = "Cheap room"
+        comments = "Test"
+        name = "Alex"
+        email = "test@hotmail.com"
+        phone_nr = "112"
+        hotel = Hotel("hotel_reservations_test")
+        retval = hotel.make_reservation(start_date, end_date, room_type, comments, name, phone_nr, email)
+        self.assertEqual(retval, True)
+

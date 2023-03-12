@@ -21,6 +21,7 @@ class Hotel:
 
     def __init__(self, filename):
         self.hotel_guests = {}
+        self.filename = filename
         self.hotel_reservations = self.read_previous_reservations(filename)
 
     def read_previous_reservations(self, filename):
@@ -41,8 +42,7 @@ class Hotel:
                 comments = split[6]
 
                 if phone_nr not in self.hotel_guests:
-                    guest = Guest(name, phone_nr, email, "guest_reservations")
-                    self.hotel_guests[phone_nr] = guest
+                    self.hotel_guests[phone_nr] = Guest(name, phone_nr, email, "guest_reservations")
                 hotel_reservations.append([phone_nr, name, email, room_type, start_date, end_date, comments])
             file.close()
             return hotel_reservations
@@ -51,7 +51,6 @@ class Hotel:
 
     def check_availability(self, start_date, end_date, room_type):
         for reservation in self.hotel_reservations:
-            check_list = []
             if reservation[3] == room_type:
                 if start_date >= reservation[5]:
                     pass
@@ -75,3 +74,26 @@ class Hotel:
             string += ", ".join(element)
             string += "\n"
         return string
+
+    """"
+    Start and end date are dates, room type and comment are string. Returns True if reservation was successful, 
+    otherwise false, example if the room is booked. 
+    """
+    def make_reservation(self, start_date, end_date, room_type, comments, name, phone_nr, email):
+        if self.check_availability(start_date, end_date, room_type):
+            if phone_nr not in self.hotel_guests:
+                self.hotel_guests[phone_nr] = Guest(name, phone_nr, email, "guest_reservations")
+            self.hotel_reservations.append([phone_nr, name, email, room_type, start_date, end_date, comments])
+            self.write_reservations_to_file(phone_nr, name, email, start_date, end_date, room_type, comments, self.filename)
+            return True
+        else:
+            return False
+
+    def write_reservations_to_file(self, phone_nr, name, email, start_date, end_date, room_type, comments, filename):
+        file = open(filename, "a")
+        string = "{};{};{};{};{};{};{}\n".format(phone_nr, name, email, start_date, end_date, room_type, comments)
+        file.write(string)
+        file.close()
+
+
+
