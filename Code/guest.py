@@ -16,7 +16,6 @@ class Guest:
         self.email = email
         self.guest_reservations = self.read_previous_guest_reservations(filename)
 
-
     def get_name(self):
         return self.name
 
@@ -38,18 +37,8 @@ class Guest:
         file.close()
         return list
 
-
     def get_previous_reservations(self):
         return self.guest_reservations
-
-
-    """"
-    Start and end date are dates, room type and comment are string. Returns True if reservation was successful, 
-    otherwise false, example if the room is booked. 
-    """
-    def make_reservation(self, start_date, end_date, room_type, comment):
-        return False
-
 
     """"
     Writes to the guest_reservations file if the reservation was successful. Returns true if successful
@@ -57,6 +46,7 @@ class Guest:
     
     We use phone numbers to identify the guests because guests can have the same names, but not the same phone number. 
     The guest file is one file that looks like:
+    
     
     phone_nr1
     start_date, end_date, room_type
