@@ -42,7 +42,7 @@ class Hotel:
                 comments = split[6]
 
                 if phone_nr not in self.hotel_guests:
-                    self.hotel_guests[phone_nr] = Guest(name, phone_nr, email, "guest_reservations")
+                    self.hotel_guests[phone_nr] = Guest(name, phone_nr, email, self.filename)
                 hotel_reservations.append([phone_nr, name, email, room_type, start_date, end_date, comments])
             file.close()
             return hotel_reservations
@@ -77,12 +77,13 @@ class Hotel:
 
     """"
     Start and end date are dates, room type and comment are string. Returns True if reservation was successful, 
-    otherwise false, example if the room is booked. 
+    otherwise False, example if the room is booked. 
     """
     def make_reservation(self, start_date, end_date, room_type, comments, name, phone_nr, email):
         if self.check_availability(start_date, end_date, room_type):
             if phone_nr not in self.hotel_guests:
-                self.hotel_guests[phone_nr] = Guest(name, phone_nr, email, "guest_reservations")
+                self.hotel_guests[phone_nr] = Guest(name, phone_nr, email, self.filename)
+            self.hotel_guests[phone_nr].add_reservation(start_date, end_date, room_type, comments)
             self.hotel_reservations.append([phone_nr, name, email, room_type, start_date, end_date, comments])
             self.write_reservations_to_file(phone_nr, name, email, start_date, end_date, room_type, comments, self.filename)
             return True
