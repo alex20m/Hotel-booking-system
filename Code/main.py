@@ -12,6 +12,6 @@ def main():
     hotel = Hotel("hotel_reservations_test")
     room_type = "Cheap room"
     phone_nr = "112"
-    print(hotel.get_guest_reservations("112")[1].get_price())
+    print(hotel.get_guest_reservations("112")[0].get_price())
 
 main()
