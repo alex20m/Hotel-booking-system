@@ -10,19 +10,33 @@ class Guest:
     removed from this list.
     """
 
-    def __init__(self, name, phone_nr, email):
+    def __init__(self, name, phone_nr, email, filename):
         self.name = name
         self.phone_nr = phone_nr
         self.email = email
-        self.guest_reservations = []
+        self.guest_reservations = self.read_previous_guest_reservations(filename)
 
 
     def get_name(self):
         return self.name
 
-
-    def read_previous_guest_reservations(self):
-        pass
+    def read_previous_guest_reservations(self, filename):
+        list = []
+        file = open(filename, "r")
+        for line in file:
+            line = line.rstrip()
+            if line == self.phone_nr:
+                line = file.readline()
+                while line != "\n":
+                    line = line.rstrip()
+                    split_list = line.split(";")
+                    check_in = split_list[0]
+                    check_out = split_list[1]
+                    room_type = split_list[2]
+                    list.append([check_in, check_out, room_type])
+                    line = file.readline()
+        file.close()
+        return list
 
 
     def get_previous_reservations(self):
