@@ -23,10 +23,10 @@ class Hotel:
         self.hotel_guests = {}
         self.hotel_reservations = self.read_previous_reservations(filename)
 
-    def read_previous_reservations(self, file_name):
+    def read_previous_reservations(self, filename):
         try:
             hotel_reservations = []
-            file = open(file_name, "r")
+            file = open(filename, "r")
             for line in file:
                 line = line.rstrip()
                 split = line.split(";")
@@ -41,7 +41,7 @@ class Hotel:
                 comments = split[6]
 
                 if phone_nr not in self.hotel_guests:
-                    guest = Guest(name, phone_nr, email)
+                    guest = Guest(name, phone_nr, email, "guest_reservations")
                     self.hotel_guests[phone_nr] = guest
                 hotel_reservations.append([phone_nr, name, email, room_type, start_date, end_date, comments])
             file.close()
