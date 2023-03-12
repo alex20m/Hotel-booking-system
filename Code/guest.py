@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from reservations import Reservations
 
 class Guest:
@@ -25,7 +25,9 @@ class Guest:
             line = line.rstrip()
             split_list = line.split(";")
             if split_list[0] == self.phone_nr:
-                reservation = Reservations(self, split_list[3], split_list[4], split_list[5], split_list[6])
+                start_date = datetime.strptime(split_list[3], '%Y-%m-%d').date()
+                end_date = datetime.strptime(split_list[4], '%Y-%m-%d').date()
+                reservation = Reservations(self, start_date, end_date, split_list[5], split_list[6])
                 list.append(reservation)
         file.close()
         return list

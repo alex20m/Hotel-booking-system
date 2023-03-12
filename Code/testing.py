@@ -2,7 +2,6 @@ import unittest
 from datetime import date, datetime
 from reservations import Reservations
 from hotel import Hotel
-from guest import Guest
 
 
 class TestReservations(unittest.TestCase):

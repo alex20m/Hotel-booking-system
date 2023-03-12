@@ -96,5 +96,11 @@ class Hotel:
         file.write(string)
         file.close()
 
+    def get_guest_reservations(self, phone_nr):
+        if phone_nr in self.hotel_guests:
+            return self.hotel_guests[phone_nr].get_previous_reservations()
+        else:
+            return False
+
 
 
