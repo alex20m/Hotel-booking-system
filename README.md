@@ -7,7 +7,7 @@
 At this point everything but the UI is almost implemented. There will almost surely be some small changes, but for now
 the program can read previous files (reservations) and writes new reservations to the files. The reservation making
 part of the program is also working, which means the program knows if a room is available or not, and if available, 
-makes a reservation.
+makes a reservation. 
 
 
 ## Instructions
