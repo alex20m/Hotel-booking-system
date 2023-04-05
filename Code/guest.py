@@ -52,5 +52,6 @@ class Guest:
             list.append("Comments: " + reservation.comments)
             string += ", ".join(list)
             string += "\n"
+            string += "\n"
             list = []
         return string

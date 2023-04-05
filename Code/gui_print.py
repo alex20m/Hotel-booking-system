@@ -11,21 +11,21 @@ from guest import Guest
 
 class GUIPrint(QtWidgets.QMainWindow):
 
-    def __init__(self, hotel, print):
+    def __init__(self, hotel, print_type):
         super().__init__()
         self.hotel = hotel
 
         self.main_widget = QWidget()
 
-        self.setWindowTitle("Hotels reservations")
-
         self.setCentralWidget(self.main_widget)
         self.main_layout = QVBoxLayout()
         self.main_widget.setLayout(self.main_layout)
 
-        if print == "Hotel":
+        if print_type == "Hotel":
+            self.setWindowTitle("Hotel reservations")
             self.print_hotel()
-        elif print == "Guest":
+        elif print_type == "Guest":
+            self.setWindowTitle("Guest reservations")
             self.print_guest()
 
         self.showMaximized()
@@ -33,17 +33,14 @@ class GUIPrint(QtWidgets.QMainWindow):
     def print_hotel(self):
         start_date = date(2023, 3, 10)
         end_date = date(2023, 3, 26)
+        print(self.hotel.hotel_reservations)
         string = self.hotel.print_reservations_in_interval(start_date, end_date)
         self.make_window(string)
 
-
-
     def print_guest(self):
-        guest = Guest("Alex", "112", "alex.mecklin@hotmail.com", "hotel_reservations_test")
+        guest = Guest("Alex", "0442046661", "alex.mecklin@hotmail.com", "hotel_reservations")
         string = guest.print_reservation_history()
         self.make_window(string)
-
-
 
     def make_window(self, string):
 

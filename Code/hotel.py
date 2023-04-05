@@ -69,9 +69,19 @@ class Hotel:
             if (start_date <= check_in < end_date) or (start_date < check_out <= end_date): #Then it is in the interval
                 list.append(reservation)
         for element in list:
-            element[4] = str(element[4])
-            element[5] = str(element[5])
-            string += ", ".join(element)
+            string += element[0]
+            string += ", "
+            string += element[1]
+            string += ", "
+            string += element[2]
+            string += ", "
+            string += element[3]
+            string += ", "
+            string += str(element[4])
+            string += ", "
+            string += str(element[5])
+            string += ", "
+            string += element[6]
             string += "\n"
             string += "\n"
         return string

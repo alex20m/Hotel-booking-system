@@ -57,17 +57,14 @@ class GUI(QtWidgets.QMainWindow):
         hotel_button.clicked.connect(self.print_hotel_reservations)
         guest_button.clicked.connect(self.print_guest_reservations)
 
-
-
-
     def make_reservation(self):
        pass
 
     def print_hotel_reservations(self):
-        self.print_window = GUIPrint(self.hotel)
+        self.print_window = GUIPrint(self.hotel, "Hotel")
 
     def print_guest_reservations(self):
-        self.print_window = GUIPrint(self.hotel)
+        self.print_window = GUIPrint(self.hotel, "Guest")
 
 
 
