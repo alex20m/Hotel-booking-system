@@ -1,16 +1,20 @@
+from PyQt6.QtCore import QRegularExpression
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, \
-    QBoxLayout, QGraphicsRectItem
+    QBoxLayout, QGraphicsRectItem, QScrollArea, QTextEdit, QSizePolicy, QToolBar, QLineEdit
 from PyQt6 import QtWidgets
 from hotel import Hotel
-
+from datetime import date
+from guest import Guest
 
 
 
 class GUIPrint(QtWidgets.QMainWindow):
 
-    def __init__(self):
+    def __init__(self, hotel, print):
         super().__init__()
+        self.hotel = hotel
+
         self.main_widget = QWidget()
 
         self.setWindowTitle("Hotels reservations")
@@ -19,12 +23,51 @@ class GUIPrint(QtWidgets.QMainWindow):
         self.main_layout = QVBoxLayout()
         self.main_widget.setLayout(self.main_layout)
 
-        self.print_hotel()
+        if print == "Hotel":
+            self.print_hotel()
+        elif print == "Guest":
+            self.print_guest()
 
         self.showMaximized()
 
     def print_hotel(self):
-        print(Hotel.read_previous_reservations())
+        start_date = date(2023, 3, 10)
+        end_date = date(2023, 3, 26)
+        string = self.hotel.print_reservations_in_interval(start_date, end_date)
+        self.make_window(string)
+
+
 
     def print_guest(self):
-        pass
+        guest = Guest("Alex", "112", "alex.mecklin@hotmail.com", "hotel_reservations_test")
+        string = guest.print_reservation_history()
+        self.make_window(string)
+
+
+
+    def make_window(self, string):
+
+        # We make a scrollable area if the text is long
+        # The text should be read only
+        # We also change the font so that is is big enough
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        self.text_edit = QTextEdit()
+        self.text_edit.setPlainText(string)
+        scroll_area.setWidget(self.text_edit)
+        self.text_edit.setReadOnly(True)
+        font = QFont()
+        font.setPointSize(22)
+        self.text_edit.setFont(font)
+
+        # We then make a toolbar with a search bar so the user can search for things instead of just scroll
+        # Not working yet
+        toolbar = QToolBar()
+        self.addToolBar(toolbar)
+        self.search_bar = QLineEdit()
+        toolbar.addWidget(self.search_bar)
+
+        self.main_layout.addWidget(scroll_area)
+
+
+

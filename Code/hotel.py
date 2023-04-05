@@ -73,6 +73,7 @@ class Hotel:
             element[5] = str(element[5])
             string += ", ".join(element)
             string += "\n"
+            string += "\n"
         return string
 
     """"

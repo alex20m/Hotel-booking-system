@@ -7,8 +7,9 @@ from gui_print import GUIPrint
 
 class GUI(QtWidgets.QMainWindow):
 
-    def __init__(self):
+    def __init__(self, hotel):
         super().__init__()
+        self.hotel = hotel
 
         self.main_widget = QWidget()
         self.setCentralWidget(self.main_widget)
@@ -63,10 +64,10 @@ class GUI(QtWidgets.QMainWindow):
        pass
 
     def print_hotel_reservations(self):
-        self.print_window = GUIPrint()
+        self.print_window = GUIPrint(self.hotel)
 
     def print_guest_reservations(self):
-        pass
+        self.print_window = GUIPrint(self.hotel)
 
 
 

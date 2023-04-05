@@ -16,7 +16,7 @@ def main():
 
     # Create a new PyQt6 application object
     app = QApplication(sys.argv)
-    gui = GUI()
+    gui = GUI(hotel)
     sys.exit(app.exec())
 
 
