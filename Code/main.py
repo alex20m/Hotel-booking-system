@@ -11,6 +11,9 @@ Main function of the program is used to start the GUI, while all of the GUI func
 
 def main():
 
+    filename = "hotel_reservations"
+    hotel = Hotel(filename)
+
     # Create a new PyQt6 application object
     app = QApplication(sys.argv)
     gui = GUI()
