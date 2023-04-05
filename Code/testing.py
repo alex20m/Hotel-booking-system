@@ -2,6 +2,7 @@ import unittest
 from datetime import date, datetime
 from reservations import Reservations
 from hotel import Hotel
+from guest import Guest
 
 
 class TestReservations(unittest.TestCase):
@@ -66,10 +67,10 @@ class TestReservations(unittest.TestCase):
 
     def test_printing_interval(self):
         hotel = Hotel("hotel_reservations_test")
-        start_date = date(2023, 3, 20)
-        end_date = date(2023, 3, 25)
+        start_date = date(2023, 3,12)
+        end_date = date(2023, 3, 16)
         retval = hotel.print_reservations_in_interval(start_date, end_date)
-        self.assertEqual(retval, "0442046661, Alex Mecklin, alex.mecklin@hotmail.com, Cheap room, 2023-03-23, 2023-03-26, comments\n")
+        self.assertEqual(retval, "112, Alex, email@test.com, Expensive room, 2023-03-10, 2023-03-15, -\n")
 
     def test_make_reservation(self):
         start_date = date(2023, 3, 23)
@@ -82,4 +83,13 @@ class TestReservations(unittest.TestCase):
         hotel = Hotel("hotel_reservations_test")
         retval = hotel.make_reservation(start_date, end_date, room_type, comments, name, phone_nr, email)
         self.assertEqual(retval, True)
+
+    def test_print_guest_reservations(self):
+
+        guest = Guest("Alex", "112", "alex.mecklin@hotmail.com", "hotel_reservations_test")
+        retval = guest.print_reservation_history()
+        str = "Expensive room, Check in: 2023-03-10, Check out: 2023-03-15, Comments: -\n" \
+              "Expensive room, Check in: 2023-03-09, Check out: 2023-03-10, Comments: -\n" \
+              "Cheap room, Check in: 2023-03-09, Check out: 2023-03-10, Comments: -\n"
+        self.assertEqual(retval, str)
 
