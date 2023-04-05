@@ -43,4 +43,14 @@ class Guest:
     Gets and prints reservation history of guest
     """
     def print_reservation_history(self):
-        pass
+        string = ""
+        list = []
+        for reservation in self.get_previous_reservations():
+            list.append(reservation.room_type)
+            list.append("Check in: " + str(reservation.start_date))
+            list.append("Check out: " + str(reservation.end_date))
+            list.append("Comments: " + reservation.comments)
+            string += ", ".join(list)
+            string += "\n"
+            list = []
+        return string
