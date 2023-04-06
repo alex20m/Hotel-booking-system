@@ -34,7 +34,7 @@ class GUI(QtWidgets.QMainWindow):
     def buttons(self):
 
         label = QLabel("I want to:")
-        reservation_button = QPushButton("Make reservation")
+        reservation_button = QPushButton("Make a reservation")
         hotel_button = QPushButton("Print all of the hotels reservations")
         guest_button = QPushButton("Print a guests reservations")
 
