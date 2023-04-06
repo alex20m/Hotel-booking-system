@@ -33,7 +33,6 @@ class GUIPrint(QtWidgets.QMainWindow):
     def print_hotel(self):
         start_date = date(2023, 3, 10)
         end_date = date(2023, 3, 26)
-        print(self.hotel.hotel_reservations)
         string = self.hotel.print_reservations_in_interval(start_date, end_date)
         self.make_window(string)
 
