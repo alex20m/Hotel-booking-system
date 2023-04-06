@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLay
     QBoxLayout, QGraphicsRectItem
 from PyQt6 import QtWidgets
 from gui_print import GUIPrint
+from gui_calender import GUICalender
 
 
 class GUI(QtWidgets.QMainWindow):
@@ -21,13 +22,6 @@ class GUI(QtWidgets.QMainWindow):
         self.center()
         self.buttons()
         self.show()
-
-
-
-    def calender(self):
-
-        self.calender = QCalendarWidget()
-        self.calender_layout.addWidget(self.calender)
 
     def center(self):
         screen = QApplication.primaryScreen()
@@ -58,7 +52,7 @@ class GUI(QtWidgets.QMainWindow):
         guest_button.clicked.connect(self.print_guest_reservations)
 
     def make_reservation(self):
-       pass
+        self.print_window = GUICalender(self.hotel)
 
     def print_hotel_reservations(self):
         self.print_window = GUIPrint(self.hotel, "Hotel")
