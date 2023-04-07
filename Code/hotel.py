@@ -52,9 +52,9 @@ class Hotel:
     def check_availability(self, start_date, end_date, room_type):
         for reservation in self.hotel_reservations:
             if reservation[3] == room_type:
-                if start_date >= reservation[5]:
+                if start_date > reservation[5]:
                     pass
-                elif end_date <= reservation[4]:
+                elif end_date < reservation[4]:
                     pass
                 else:
                     return False
