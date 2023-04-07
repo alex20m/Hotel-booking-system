@@ -34,6 +34,6 @@ class Reservations:
             expensive_room = ExpensiveRoom()
             price = expensive_room.get_price()
 
-        length = end_date - start_date
+        length = (end_date - start_date).days
 
         return price * length
