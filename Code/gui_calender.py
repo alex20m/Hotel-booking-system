@@ -3,9 +3,9 @@ from PyQt6.QtGui import QFont, QTextCharFormat, QColor, QBrush
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, \
     QBoxLayout, QGraphicsRectItem, QScrollArea, QTextEdit, QSizePolicy, QToolBar, QLineEdit, QComboBox
 from PyQt6 import QtWidgets
-from hotel import Hotel
 from datetime import date, timedelta, datetime
-from guest import Guest
+from reservations import Reservations
+from gui_guest_info import GUIGuestInfo
 
 
 
@@ -13,6 +13,8 @@ class GUICalender(QtWidgets.QMainWindow):
 
     def __init__(self, hotel):
         super().__init__()
+        self.setWindowTitle("Make a reservation")
+
         self.hotel = hotel
         self.start_date = None
         self.end_date = None
@@ -20,10 +22,12 @@ class GUICalender(QtWidgets.QMainWindow):
         self.end_set = False
         self.room_type = None
         self.today = datetime.today().date()
+        self.price = None
 
         self.standard_color = QColor(23, 23, 23)
         self.transparent_red = QColor(255, 0, 0, 128)
         self.transparent_green = QColor(0, 255, 0, 128)
+        self.select_color = QColor(0, 140, 0, 128)
 
         self.main_widget = QWidget()
 
@@ -35,14 +39,16 @@ class GUICalender(QtWidgets.QMainWindow):
         self.container_layout = QVBoxLayout()
         self.container_widget.setLayout(self.container_layout)
 
+        self.bottom_layout = QHBoxLayout()
+
         self.make_calendar()
         self.make_window()
+        self.container_layout.addLayout(self.bottom_layout)
 
         self.showMaximized()
 
         self.room_box.currentIndexChanged.connect(self.dates_not_available)
         self.choose_date_range()
-
 
     def make_calendar(self):
 
@@ -64,11 +70,16 @@ class GUICalender(QtWidgets.QMainWindow):
         self.calendar = QCalendarWidget()
         self.calendar.setGridVisible(True)
         self.calendar.setMinimumSize(640, 480)
+        self.calendar.setStyleSheet("QTableView::item:selected { background-color: %s; }" % self.select_color.name())
         self.container_layout.addWidget(self.calendar)
 
         self.confirm_button = QPushButton("Confirm")
         self.confirm_button.setFont(font)
-        self.container_layout.addWidget(self.confirm_button)
+        self.price_label = QLabel("")
+        self.price_label.setFont(font)
+
+        self.bottom_layout.addWidget(self.price_label)
+        self.bottom_layout.addWidget(self.confirm_button)
 
     def make_window(self):
         self.scroll_area = QScrollArea()
@@ -89,6 +100,8 @@ class GUICalender(QtWidgets.QMainWindow):
         self.confirm_button.clicked.connect(self.confirm_clicked)
 
     def set_range(self):
+        self.price_label.setText("")
+
         if self.room_type != None and self.room_type != "Not selected":
             chosen_date = self.calendar.selectedDate().toPyDate()
             if chosen_date >= self.today:
@@ -109,28 +122,34 @@ class GUICalender(QtWidgets.QMainWindow):
                 elif self.start_set and not self.end_set:
                     self.end_date = chosen_date
                     self.end_set = True
-                    if self.end_date >= self.start_date:
-                        self.label.setText("Press confirm")
+
+                    if self.end_date > self.start_date:
+                        if self.hotel.check_availability(self.start_date, self.end_date, self.room_type):
+                            self.paint_calendar(self.start_date, self.end_date, self.transparent_green)
+                            self.label.setText("Press confirm")
+                        else:
+                            self.label.setText("Room not available, select check-in date:")
+                            self.start_set = False
+                            self.end_set = False
                     else:
                         self.label.setText("Select check-in date:")
-
-                if self.start_set and self.end_set:
-                    if self.hotel.check_availability(self.start_date, self.end_date, self.room_type):
-                        self.paint_calendar(self.start_date, self.end_date, self.transparent_green)
-                    else:
-                        self.label.setText("Room not available, select check-in date:")
-
             else:
                 self.label.setText("Not available, select check-in date:")
                 if self.start_set and self.end_set:
                     self.paint_calendar(self.start_date, self.end_date, self.standard_color)
+                self.start_set = False
+                self.end_set = False
 
+        if self.label.text() == "Press confirm":
+            self.price = Reservations.get_price(self, self.start_date, self.end_date, self.room_type)
+            self.price_label.setText("Price of stay: {}€".format(self.price))
 
     def confirm_clicked(self):
         if self.start_set and self.end_set:
             if self.start_date <= self.end_date:
                 if self.label.text() == "Press confirm":
-                    print("Done")
+                    self.close()
+                    self.guest_info_window = GUIGuestInfo(self.hotel, self.room_type, self.price, self.start_date, self.end_date)
 
     def dates_not_available(self):
         self.standard_settings()
@@ -165,6 +184,7 @@ class GUICalender(QtWidgets.QMainWindow):
         self.end_set = False
         self.start_date = None
         self.end_date = None
+        self.price_label.setText("")
 
         start_date = self.today
         end_date = date(2100, 1, 1)
