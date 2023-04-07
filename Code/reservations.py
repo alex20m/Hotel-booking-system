@@ -20,22 +20,20 @@ class Reservations:
     def get_reservation_length(self):
         return (self.end_date - self.start_date).days
 
-    def get_price(self):
+    def get_price(self, start_date, end_date, room_type):
 
-        if self.room_type == "Cheap room":
+        if room_type == "Cheap room":
             cheap_room = CheapRoom()
             price = cheap_room.get_price()
 
-        elif self.room_type == "Normal room":
+        elif room_type == "Normal room":
             normal_room = NormalRoom()
             price = normal_room.get_price()
 
-        elif self.room_type == "Expensive room":
+        elif room_type == "Expensive room":
             expensive_room = ExpensiveRoom()
             price = expensive_room.get_price()
 
-        return price * self.get_reservation_length()
+        length = end_date - start_date
 
-
-    def write_file(self):
-        pass
+        return price * length
