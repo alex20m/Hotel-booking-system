@@ -1,11 +1,14 @@
-from PyQt6.QtCore import QRegularExpression, Qt, QDate
+from PyQt6.QtCore import QRegularExpression, Qt, QDate, QRect
 from PyQt6.QtGui import QFont, QTextCharFormat, QColor, QBrush
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, \
-    QBoxLayout, QGraphicsRectItem, QScrollArea, QTextEdit, QSizePolicy, QToolBar, QLineEdit, QComboBox
+    QBoxLayout, QGraphicsRectItem, QScrollArea, QTextEdit, QSizePolicy, QToolBar, QLineEdit, QComboBox, QSpacerItem, \
+    QMainWindow
 from PyQt6 import QtWidgets
 from datetime import date, timedelta, datetime
+
+from PyQt6.uic.properties import QtCore
+
 from reservations import Reservations
-from gui_guest_info import GUIGuestInfo
 
 
 
@@ -23,11 +26,18 @@ class GUICalender(QtWidgets.QMainWindow):
         self.room_type = None
         self.today = datetime.today().date()
         self.price = None
+        self.name = ""
+        self.email = ""
+        self.phone_nr = ""
+        self.comments = ""
 
         self.standard_color = QColor(23, 23, 23)
         self.transparent_red = QColor(255, 0, 0, 128)
         self.transparent_green = QColor(0, 255, 0, 128)
         self.select_color = QColor(0, 140, 0, 128)
+
+        space = QSpacerItem(0, 50)
+        space2 = QSpacerItem(0, 50)
 
         self.main_widget = QWidget()
 
@@ -37,18 +47,39 @@ class GUICalender(QtWidgets.QMainWindow):
 
         self.container_widget = QWidget()
         self.container_layout = QVBoxLayout()
+        self.info_layout = QVBoxLayout()
+        self.name_layout = QHBoxLayout()
+        self.phone_layout = QHBoxLayout()
+        self.email_layout = QHBoxLayout()
+        self.comments_layout = QHBoxLayout()
+        self.bottom_layout = QHBoxLayout()
+        self.bottom_layout_left = QVBoxLayout()
+        self.bottom_layout_right = QVBoxLayout()
+
         self.container_widget.setLayout(self.container_layout)
 
-        self.bottom_layout = QHBoxLayout()
-
         self.make_calendar()
+        self.container_layout.addItem(space)
+
         self.make_window()
-        self.container_layout.addLayout(self.bottom_layout)
+        self.container_layout.addLayout(self.info_layout)
+
+        self.info_layout.addLayout(self.name_layout)
+        self.info_layout.addLayout(self.phone_layout)
+        self.info_layout.addLayout(self.email_layout)
+        self.info_layout.addLayout(self.comments_layout)
+
+        self.info_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+
+        self.make_info()
+        self.container_layout.addItem(space2)
+        self.confirmation()
 
         self.showMaximized()
 
         self.room_box.currentIndexChanged.connect(self.dates_not_available)
         self.choose_date_range()
+        self.get_input()
 
     def make_calendar(self):
 
@@ -66,6 +97,8 @@ class GUICalender(QtWidgets.QMainWindow):
         self.room_box.setFont(menu_font)
         self.room_box.setMinimumSize(500, 50)
         self.container_layout.addWidget(self.room_box)
+        space = QSpacerItem(0, 20)
+        self.container_layout.addItem(space)
 
         self.calendar = QCalendarWidget()
         self.calendar.setGridVisible(True)
@@ -73,13 +106,10 @@ class GUICalender(QtWidgets.QMainWindow):
         self.calendar.setStyleSheet("QTableView::item:selected { background-color: %s; }" % self.select_color.name())
         self.container_layout.addWidget(self.calendar)
 
-        self.confirm_button = QPushButton("Confirm")
-        self.confirm_button.setFont(font)
         self.price_label = QLabel("")
         self.price_label.setFont(font)
 
-        self.bottom_layout.addWidget(self.price_label)
-        self.bottom_layout.addWidget(self.confirm_button)
+        self.container_layout.addWidget(self.price_label)
 
     def make_window(self):
         self.scroll_area = QScrollArea()
@@ -101,6 +131,7 @@ class GUICalender(QtWidgets.QMainWindow):
 
     def set_range(self):
         self.price_label.setText("")
+        self.standard_confirm()
 
         if self.room_type != None and self.room_type != "Not selected":
             chosen_date = self.calendar.selectedDate().toPyDate()
@@ -126,7 +157,7 @@ class GUICalender(QtWidgets.QMainWindow):
                     if self.end_date > self.start_date:
                         if self.hotel.check_availability(self.start_date, self.end_date, self.room_type):
                             self.paint_calendar(self.start_date, self.end_date, self.transparent_green)
-                            self.label.setText("Press confirm")
+                            self.label.setText("Check-in and check-out dates selected")
                         else:
                             self.label.setText("Room not available, select check-in date:")
                             self.start_set = False
@@ -140,19 +171,29 @@ class GUICalender(QtWidgets.QMainWindow):
                 self.start_set = False
                 self.end_set = False
 
-        if self.label.text() == "Press confirm":
+        if self.label.text() == "Check-in and check-out dates selected":
             self.price = Reservations.get_price(self, self.start_date, self.end_date, self.room_type)
             self.price_label.setText("Price of stay: {}€".format(self.price))
+            self.update_confirm()
 
     def confirm_clicked(self):
-        if self.start_set and self.end_set:
-            if self.start_date <= self.end_date:
-                if self.label.text() == "Press confirm":
-                    self.close()
-                    self.guest_info_window = GUIGuestInfo(self.hotel, self.room_type, self.price, self.start_date, self.end_date)
+        if self.label.text() == "Check-in and check-out dates selected":
+            if self.name != "" and self.phone_nr != "" and self.email != "":
+                self.close()
+                font = QFont()
+                font.setPointSize(25)
+
+                self.thanks_label = QLabel("Reservation successful!")
+                self.thanks_label.setFont(font)
+                self.thanks_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+                self.center()
+
+                self.thanks_label.show()
 
     def dates_not_available(self):
         self.standard_settings()
+        self.standard_confirm()
 
         if not self.start_set and not self.end_set:
             self.label.setText("Select check-in date:")
@@ -190,4 +231,132 @@ class GUICalender(QtWidgets.QMainWindow):
         end_date = date(2100, 1, 1)
         self.paint_calendar(start_date, end_date, self.standard_color)
 
+    def make_info(self):
+
+        font = QFont()
+        font.setPointSize(26)
+
+        name_label = QLabel("Enter your name:")
+        self.name_layout.addWidget(name_label)
+        self.name_input = QLineEdit()
+        self.name_layout.addWidget(self.name_input)
+        name_label.setFont(font)
+
+        phone_label = QLabel("Enter your phone number:")
+        self.phone_layout.addWidget(phone_label)
+        self.phone_input = QLineEdit()
+        self.phone_layout.addWidget(self.phone_input)
+        phone_label.setFont(font)
+
+        email_label = QLabel("Enter your email:")
+        self.email_layout.addWidget(email_label)
+        self.email_input = QLineEdit()
+        self.email_layout.addWidget(self.email_input)
+        email_label.setFont(font)
+
+        comments_label = QLabel("Do you have any additional comments?")
+        self.comments_layout.addWidget(comments_label)
+        self.comments_input = QTextEdit()
+        self.container_layout.addWidget(self.comments_input)
+        comments_label.setFont(font)
+
+    def confirmation(self):
+
+        font = QFont()
+        font.setPointSize(40)
+
+        self.confirmation_label = QLabel("Please enter booking details")
+        self.container_layout.addWidget(self.confirmation_label)
+        self.confirmation_label.setFont(font)
+        self.confirmation_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        font.setPointSize(26)
+
+        self.room_label = QLabel("")
+        self.room_label.setFont(font)
+        self.start_label = QLabel("")
+        self.start_label.setFont(font)
+        self.end_label = QLabel("")
+        self.end_label.setFont(font)
+        self.price_label_2 = QLabel("")
+        self.price_label_2.setFont(font)
+
+        self.name_label = QLabel("")
+        self.name_label.setFont(font)
+        self.phone_label = QLabel("")
+        self.phone_label.setFont(font)
+        self.email_label = QLabel("")
+        self.email_label.setFont(font)
+
+        space = QSpacerItem(0, 20)
+
+        self.container_layout.addItem(space)
+
+        self.bottom_layout_left.addWidget(self.room_label)
+        self.bottom_layout_left.addWidget(self.start_label)
+        self.bottom_layout_left.addWidget(self.end_label)
+        self.bottom_layout_left.addWidget(self.price_label_2)
+
+        self.bottom_layout_right.addWidget(self.name_label)
+        self.bottom_layout_right.addWidget(self.phone_label)
+        self.bottom_layout_right.addWidget(self.email_label)
+
+        self.bottom_layout.addLayout(self.bottom_layout_left)
+        self.bottom_layout.addLayout(self.bottom_layout_right)
+        self.container_layout.addLayout(self.bottom_layout)
+
+        space = QSpacerItem(0, 50)
+
+        self.container_layout.addItem(space)
+        self.confirm_button = QPushButton("Reserve room")
+        self.confirm_button.setFont(font)
+        self.container_layout.addWidget(self.confirm_button)
+
+    def update_confirm(self):
+        self.confirmation_label.setText("Confirm reservation details")
+        self.room_label.setText("Room type: " + str(self.room_type))
+        self.start_label.setText("Check-in: " + str(self.start_date))
+        self.end_label.setText("Check-out: " + str(self.end_date))
+        self.price_label_2.setText("Price of stay {}€".format(self.price))
+
+        self.name_label.setText("Name: " + self.name)
+        self.phone_label.setText("Phone number: " + self.phone_nr)
+        self.email_label.setText("Email: " + self.email)
+
+    def standard_confirm(self):
+        self.confirmation_label.setText("Please enter booking details")
+        self.room_label.setText("")
+        self.start_label.setText("")
+        self.end_label.setText("")
+        self.price_label_2.setText("")
+
+    def get_input(self):
+        self.name_input.textChanged.connect(self.name_input_changed)
+        self.phone_input.textChanged.connect(self.phone_input_changed)
+        self.email_input.textChanged.connect(self.email_input_changed)
+        self.comments_input.textChanged.connect(self.comment_input_changed)
+
+    def name_input_changed(self, text):
+        self.name = text
+        self.update_confirm()
+
+    def phone_input_changed(self, text):
+        self.phone_nr = text
+        self.update_confirm()
+
+    def email_input_changed(self, text):
+        self.email = text
+        self.update_confirm()
+
+    def comment_input_changed(self):
+        text = self.comments_input.toPlainText()
+        self.comments = text
+
+    def center(self):
+        screen = QApplication.primaryScreen()
+        screen_geometry = screen.geometry()
+        self.thanks_label.setGeometry(0, 0, 500, 500)
+        x = (screen_geometry.width() - self.thanks_label.width()) // 2
+        y = (screen_geometry.height() - self.thanks_label.height()) // 2
+        self.thanks_label.move(x, y)
 
