@@ -66,7 +66,7 @@ class Hotel:
         for reservation in self.hotel_reservations:
             check_in = reservation[4]
             check_out = reservation[5]
-            if (start_date <= check_in < end_date) or (start_date < check_out <= end_date): #Then it is in the interval
+            if (start_date <= check_in <= end_date) or (start_date <= check_out <= end_date): #Then it is in the interval
                 list.append(reservation)
         for element in list:
             string += element[0]
@@ -102,10 +102,10 @@ class Hotel:
             return False
 
     def write_reservations_to_file(self, phone_nr, name, email, start_date, end_date, room_type, comments, filename):
-        file = open(filename, "a")
-        string = "{};{};{};{};{};{};{}\n".format(phone_nr, name, email, start_date, end_date, room_type, comments)
-        file.write(string)
-        file.close()
+
+        with open(filename, "a") as file:
+            string = "{};{};{};{};{};{};{}\n".format(phone_nr, name, email, start_date, end_date, room_type, comments)
+            file.write(string)
 
     def get_guest_reservations(self, phone_nr):
         if phone_nr in self.hotel_guests:

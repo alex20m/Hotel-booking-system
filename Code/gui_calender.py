@@ -104,6 +104,8 @@ class GUICalender(QtWidgets.QMainWindow):
         self.calendar.setGridVisible(True)
         self.calendar.setMinimumSize(640, 480)
         self.calendar.setStyleSheet("QTableView::item:selected { background-color: %s; }" % self.select_color.name())
+        self.calendar.setSelectedDate(self.today - timedelta(days=1))
+
         self.container_layout.addWidget(self.calendar)
 
         self.price_label = QLabel("")
@@ -179,6 +181,8 @@ class GUICalender(QtWidgets.QMainWindow):
     def confirm_clicked(self):
         if self.label.text() == "Check-in and check-out dates selected":
             if self.name != "" and self.phone_nr != "" and self.email != "":
+                self.hotel.make_reservation(self.start_date, self.end_date, self.room_type, self.comments, self.name,
+                                            self.phone_nr, self.email)
                 self.close()
                 font = QFont()
                 font.setPointSize(25)
