@@ -11,6 +11,8 @@ a search bar so the user can search for a specific resevration after printing al
 The program can take reservations and can also print all of a guests reservations or all of the hotels reservations
 within a time interval.
 
+I also have 10 different unittests to test different sections of my program.
+
 
 ## Instructions
 
