@@ -73,6 +73,7 @@ class GUIPrint(QtWidgets.QMainWindow):
 
         self.guest_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.main_layout.addLayout(self.guest_layout)
+        self.make_window("")
 
         self.guest_confirm.clicked.connect(self.confirmed_nr)
 
@@ -108,13 +109,12 @@ class GUIPrint(QtWidgets.QMainWindow):
                 self.guest = self.hotel.hotel_guests[phone_nr]
 
         if self.guest == None:
-            self.not_found_label.setText("Guest has no reservations")
-            self.main_layout.addWidget(self.not_found_label)
-
+            string = "Guest has no reservations"
         else:
             self.not_found_label.setText("")
             string = self.guest.print_reservation_history()
-            self.make_window(string)
+
+        self.make_window(string)
 
     def make_calender(self):
         self.start_date = None
@@ -177,9 +177,13 @@ class GUIPrint(QtWidgets.QMainWindow):
         self.end_date = selected_date
 
     def confirmed_interval(self):
+        string = ""
         if self.start_date != None and self.end_date != None:
             string = self.hotel.print_reservations_in_interval(self.start_date, self.end_date)
-            self.make_window(string)
+            if string == "":
+                string = "No reservations in interval"
+
+        self.make_window(string)
 
 
 
