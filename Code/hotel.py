@@ -17,6 +17,7 @@ class Hotel:
     fifth element start_date, sixth end_date and seventh comments.
 
     hotel_guests is a dictionary where the key is the guests phone number and the value are the guest object.
+    If a guest has removed all of their reservations, the guest is also removed from this list.
     """
 
     def __init__(self, filename):
@@ -116,6 +117,7 @@ class Hotel:
     def remove_reservation(self, guest, remove_start, remove_end, remove_room):
         string = ""
         container_list = []
+        container_dic = {}
         with open(self.filename, "w") as file:
             for hotel_reservation in self.hotel_reservations:
                 phone_nr = hotel_reservation[0]
@@ -134,6 +136,15 @@ class Hotel:
 
             file.write(string)
             self.hotel_reservations = container_list
+
+            if len(guest.guest_reservations) == 0:
+                for person in self.hotel_guests:
+                    if guest.phone_nr == person:
+                        pass
+                    else:
+                        container_dic[person] = self.hotel_guests[person]
+                self.hotel_guests = container_dic
+
 
 
 
