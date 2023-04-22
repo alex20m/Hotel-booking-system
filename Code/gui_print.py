@@ -86,7 +86,7 @@ class GUIPrint(QtWidgets.QMainWindow):
         self.scroll_area.setWidget(self.text_edit)
         self.text_edit.setReadOnly(True)
         font = QFont()
-        font.setPointSize(22)
+        font.setPointSize(18)
         self.text_edit.setFont(font)
 
         # We then make a toolbar with a search bar so the user can search for things instead of just scroll

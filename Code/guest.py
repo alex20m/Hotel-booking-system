@@ -50,7 +50,7 @@ class Guest:
             list.append("Check in: " + str(reservation.start_date))
             list.append("Check out: " + str(reservation.end_date))
             list.append("Comments: " + reservation.comments)
-            string += ", ".join(list)
+            string += ",    ".join(list)
             string += "\n"
             string += "\n"
             list = []

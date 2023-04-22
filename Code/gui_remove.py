@@ -99,7 +99,7 @@ class GUIRemove(QtWidgets.QMainWindow):
             start_date = reservation.start_date
             end_date = reservation.end_date
             room_type = reservation.room_type
-            self.label_list.append(QCheckBox(room_type + ", Check-in: " + str(start_date) + ", Check-out: " + str(end_date)))
+            self.label_list.append(QCheckBox(room_type + ",    Check-in: " + str(start_date) + ",    Check-out: " + str(end_date)))
 
         for i in range(len(self.label_list)):
             label = self.label_list[i]
@@ -135,8 +135,8 @@ class GUIRemove(QtWidgets.QMainWindow):
                     text = label.text()
                     split_text = text.split(",")
                     room_type = split_text[0]
-                    check_in = split_text[1][11:]
-                    check_out = split_text[2][12:]
+                    check_in = split_text[1][14:]
+                    check_out = split_text[2][15:]
                     check_in = datetime.strptime(check_in, '%Y-%m-%d').date()
                     check_out = datetime.strptime(check_out, '%Y-%m-%d').date()
                     self.hotel.remove_reservation(self.guest, check_in, check_out, room_type)
