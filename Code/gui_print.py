@@ -3,9 +3,7 @@ from PyQt6.QtGui import QFont, QColor
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, \
     QBoxLayout, QGraphicsRectItem, QScrollArea, QTextEdit, QSizePolicy, QToolBar, QLineEdit, QDateEdit, QSpacerItem
 from PyQt6 import QtWidgets
-from hotel import Hotel
-from datetime import date, timedelta
-from guest import Guest
+
 
 
 
