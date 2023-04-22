@@ -57,10 +57,11 @@ class Guest:
         return string
 
     def remove_reservation(self, reservation):
-        i = 0
-        print(self.guest_reservations)
+        container_list = []
         for guest_reservation in self.guest_reservations:
-            if guest_reservation.room_type == reservation[3]:
-                if guest_reservation.start_date == reservation[4] and guest_reservation.end_date == reservation[5]:
-                    del self.guest_reservations[i]
-            i += 1
+            if guest_reservation.room_type == reservation[3] and guest_reservation.start_date == reservation[4] and guest_reservation.end_date == reservation[5]:
+                pass
+            else:
+                container_list.append(guest_reservation)
+        self.guest_reservations = container_list
+

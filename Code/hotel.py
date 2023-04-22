@@ -114,7 +114,8 @@ class Hotel:
             return False
 
     def remove_reservation(self, guest, remove_start, remove_end, remove_room):
-        i = 0
+        string = ""
+        container_list = []
         with open(self.filename, "w") as file:
             for hotel_reservation in self.hotel_reservations:
                 phone_nr = hotel_reservation[0]
@@ -127,12 +128,12 @@ class Hotel:
 
                 if phone_nr == guest.phone_nr and room_type == remove_room and start_date == remove_start and end_date == remove_end:
                     guest.remove_reservation(hotel_reservation)
-                    del self.hotel_reservations[i]
                 else:
-                    string = "{};{};{};{};{};{};{}\n".format(phone_nr, name, email, start_date, end_date, room_type, comments)
-                    file.write(string)
+                    string += "{};{};{};{};{};{};{}\n".format(phone_nr, name, email, start_date, end_date, room_type, comments)
+                    container_list.append(hotel_reservation)
 
-                i += 1
+            file.write(string)
+            self.hotel_reservations = container_list
 
 
 
