@@ -113,5 +113,27 @@ class Hotel:
         else:
             return False
 
+    def remove_reservation(self, guest, remove_start, remove_end, remove_room):
+        i = 0
+        with open(self.filename, "w") as file:
+            for hotel_reservation in self.hotel_reservations:
+                phone_nr = hotel_reservation[0]
+                name = hotel_reservation[1]
+                email = hotel_reservation[2]
+                room_type = hotel_reservation[3]
+                start_date = hotel_reservation[4]
+                end_date = hotel_reservation[5]
+                comments = hotel_reservation[6]
+
+                if phone_nr == guest.phone_nr and room_type == remove_room and start_date == remove_start and end_date == remove_end:
+                    guest.remove_reservation(hotel_reservation)
+                    del self.hotel_reservations[i]
+                else:
+                    string = "{};{};{};{};{};{};{}\n".format(phone_nr, name, email, start_date, end_date, room_type, comments)
+                    file.write(string)
+
+                i += 1
+
+
 
 

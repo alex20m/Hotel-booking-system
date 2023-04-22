@@ -55,3 +55,12 @@ class Guest:
             string += "\n"
             list = []
         return string
+
+    def remove_reservation(self, reservation):
+        i = 0
+        print(self.guest_reservations)
+        for guest_reservation in self.guest_reservations:
+            if guest_reservation.room_type == reservation[3]:
+                if guest_reservation.start_date == reservation[4] and guest_reservation.end_date == reservation[5]:
+                    del self.guest_reservations[i]
+            i += 1

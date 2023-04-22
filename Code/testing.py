@@ -48,6 +48,14 @@ class TestReservations(unittest.TestCase):
         reservation = Reservations(guest, start_date, end_date, room_type, comments)
         self.assertEqual(reservation.get_reservation_length(), 1)
 
+    def test_remove(self):
+        hotel = Hotel("hotel_reservations")
+        guest = Guest("Alex", "112", "email", "hotel_reservations")
+        start_date = date(2023, 4, 22)
+        end_date = date(2023, 4, 29)
+        room_type = "Expensive room"
+        hotel.remove_reservation(guest, start_date, end_date, room_type)
+
     def test_price(self):
         start_date = date(2023, 3, 31)
         end_date = date(2023, 4, 3)
@@ -92,4 +100,5 @@ class TestReservations(unittest.TestCase):
               "Expensive room, Check in: 2023-03-09, Check out: 2023-03-10, Comments: -\n" \
               "Cheap room, Check in: 2023-03-09, Check out: 2023-03-10, Comments: -\n"
         self.assertEqual(retval, str)
+
 
