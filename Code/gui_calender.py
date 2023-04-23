@@ -1,5 +1,5 @@
 from PyQt6.QtCore import QRegularExpression, Qt, QDate, QRect
-from PyQt6.QtGui import QFont, QTextCharFormat, QColor, QBrush
+from PyQt6.QtGui import QFont, QTextCharFormat, QColor, QBrush, QPixmap, QPalette
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, \
     QBoxLayout, QGraphicsRectItem, QScrollArea, QTextEdit, QSizePolicy, QToolBar, QLineEdit, QComboBox, QSpacerItem, \
     QMainWindow
@@ -184,16 +184,29 @@ class GUICalender(QtWidgets.QMainWindow):
                 self.hotel.make_reservation(self.start_date, self.end_date, self.room_type, self.comments, self.name,
                                             self.phone_nr, self.email)
                 self.close()
+
+                self.widget = QWidget()
+                main_layout = QVBoxLayout()
+                self.widget.setLayout(main_layout)
+
                 font = QFont()
-                font.setPointSize(25)
+                font.setPointSize(30)
 
-                self.thanks_label = QLabel("Reservation successful!")
-                self.thanks_label.setFont(font)
-                self.thanks_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+                thanks_label = QLabel("Reservation successful!")
+                thanks_label.setFont(font)
+                thanks_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-                self.center()
+                image = QLabel()
+                pixmap = QPixmap("image2.png").scaled(300, 300, aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatioByExpanding)
+                image.setPixmap(pixmap)
+                image.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-                self.thanks_label.show()
+                self.center(self.widget)
+
+                main_layout.addWidget(thanks_label)
+                main_layout.addWidget(image)
+
+                self.widget.show()
 
     def dates_not_available(self):
         self.standard_settings()
@@ -356,11 +369,11 @@ class GUICalender(QtWidgets.QMainWindow):
         text = self.comments_input.toPlainText()
         self.comments = text
 
-    def center(self):
+    def center(self, window):
         screen = QApplication.primaryScreen()
         screen_geometry = screen.geometry()
-        self.thanks_label.setGeometry(0, 0, 500, 500)
-        x = (screen_geometry.width() - self.thanks_label.width()) // 2
-        y = (screen_geometry.height() - self.thanks_label.height()) // 2
-        self.thanks_label.move(x, y)
+        window.setGeometry(0, 0, 640, 480)
+        x = (screen_geometry.width() - window.width()) // 2
+        y = (screen_geometry.height() - window.height()) // 2
+        window.move(x, y)
 

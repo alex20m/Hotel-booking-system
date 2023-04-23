@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from PyQt6.QtCore import QRegularExpression, Qt, QDate
-from PyQt6.QtGui import QFont, QColor
+from PyQt6.QtGui import QFont, QColor, QPixmap, QCloseEvent
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, \
     QBoxLayout, QGraphicsRectItem, QScrollArea, QTextEdit, QSizePolicy, QToolBar, QLineEdit, QDateEdit, QSpacerItem, \
     QCheckBox
@@ -145,20 +145,37 @@ class GUIRemove(QtWidgets.QMainWindow):
     def cancel_successful(self):
         self.close()
 
+        self.widget = QWidget()
+        main_layout = QVBoxLayout()
+        self.widget.setLayout(main_layout)
+
         font = QFont()
-        font.setPointSize(25)
+        font.setPointSize(30)
 
-        self.label = QLabel("Reservation canceled!")
-        self.label.setFont(font)
-        self.center(self.label)
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        thanks_label = QLabel("Reservation canceled!")
+        thanks_label.setFont(font)
+        thanks_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.label.show()
+        image = QLabel()
+        pixmap = QPixmap("image3.png").scaled(300, 300, aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatioByExpanding)
+        image.setPixmap(pixmap)
+        image.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.center(self.widget)
+
+        main_layout.addWidget(thanks_label)
+        main_layout.addWidget(image)
+
+        self.widget.show()
 
     def center(self, label):
         screen = QApplication.primaryScreen()
         screen_geometry = screen.geometry()
-        label.setGeometry(0, 0, 500, 500)
+        label.setGeometry(0, 0, 640, 480)
         x = (screen_geometry.width() - label.width()) // 2
         y = (screen_geometry.height() - label.height()) // 2
         label.move(x, y)
+
+    def closeEvent(self, event: QCloseEvent) -> None:
+        from gui import GUI
+        gui = GUI(self.hotel)
