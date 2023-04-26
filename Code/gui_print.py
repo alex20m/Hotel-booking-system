@@ -1,7 +1,7 @@
-from PyQt6.QtCore import QRegularExpression, Qt, QDate
+from PyQt6.QtCore import Qt, QDate
 from PyQt6.QtGui import QFont, QColor
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, \
-    QBoxLayout, QGraphicsRectItem, QScrollArea, QTextEdit, QSizePolicy, QToolBar, QLineEdit, QDateEdit, QSpacerItem
+from PyQt6.QtWidgets import QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, \
+    QScrollArea, QTextEdit, QToolBar, QLineEdit, QDateEdit, QSpacerItem
 from PyQt6 import QtWidgets
 
 

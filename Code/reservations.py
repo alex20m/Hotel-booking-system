@@ -1,4 +1,3 @@
-from datetime import date, timedelta
 from cheap_room import CheapRoom
 from normal_room import NormalRoom
 from expensive_room import ExpensiveRoom

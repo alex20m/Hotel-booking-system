@@ -1,8 +1,4 @@
-from guest import Guest
 from datetime import date, datetime
-from cheap_room import CheapRoom
-from normal_room import NormalRoom
-from expensive_room import ExpensiveRoom
 from guest import Guest
 
 

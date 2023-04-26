@@ -1,10 +1,9 @@
 from datetime import datetime
 
-from PyQt6.QtCore import QRegularExpression, Qt, QDate
-from PyQt6.QtGui import QFont, QColor, QPixmap, QCloseEvent
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, \
-    QBoxLayout, QGraphicsRectItem, QScrollArea, QTextEdit, QSizePolicy, QToolBar, QLineEdit, QDateEdit, QSpacerItem, \
-    QCheckBox
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QFont, QPixmap, QCloseEvent
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, \
+    QScrollArea, QLineEdit, QSpacerItem, QCheckBox
 from PyQt6 import QtWidgets
 
 

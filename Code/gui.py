@@ -1,7 +1,6 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont, QPixmap, QPalette, QBrush, QGuiApplication, QScreen
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, \
-    QBoxLayout, QGraphicsRectItem
+from PyQt6.QtGui import QFont, QPixmap, QPalette, QBrush
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout
 from PyQt6 import QtWidgets
 
 from gui_remove import GUIRemove

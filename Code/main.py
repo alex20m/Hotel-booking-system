@@ -1,6 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout
-from datetime import date
+from PyQt6.QtWidgets import QApplication
 from hotel import Hotel
 from gui import GUI
 

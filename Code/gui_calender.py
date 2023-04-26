@@ -1,15 +1,10 @@
-from PyQt6.QtCore import QRegularExpression, Qt, QDate, QRect
-from PyQt6.QtGui import QFont, QTextCharFormat, QColor, QBrush, QPixmap, QPalette
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QFont, QTextCharFormat, QColor, QPixmap
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, \
-    QBoxLayout, QGraphicsRectItem, QScrollArea, QTextEdit, QSizePolicy, QToolBar, QLineEdit, QComboBox, QSpacerItem, \
-    QMainWindow
+    QScrollArea, QTextEdit, QLineEdit, QComboBox, QSpacerItem, QMainWindow
 from PyQt6 import QtWidgets
 from datetime import date, timedelta, datetime
-
-from PyQt6.uic.properties import QtCore
-
 from reservations import Reservations
-
 
 
 class GUICalender(QtWidgets.QMainWindow):
