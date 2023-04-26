@@ -128,9 +128,11 @@ class GUIRemove(QtWidgets.QMainWindow):
         self.cancel_button.clicked.connect(self.cancel_confirmed)
 
     def cancel_confirmed(self):
+        checked = 0
         if self.info_label.text() != "Guest not found" and self.info_label.text() != "":
             for label in self.label_list:
                 if label.isChecked():
+                    checked += 1
                     text = label.text()
                     split_text = text.split(",")
                     room_type = split_text[0]
@@ -139,7 +141,8 @@ class GUIRemove(QtWidgets.QMainWindow):
                     check_in = datetime.strptime(check_in, '%Y-%m-%d').date()
                     check_out = datetime.strptime(check_out, '%Y-%m-%d').date()
                     self.hotel.remove_reservation(self.guest, check_in, check_out, room_type)
-            self.cancel_successful()
+            if checked != 0:
+                self.cancel_successful()
 
     def cancel_successful(self):
         self.close()

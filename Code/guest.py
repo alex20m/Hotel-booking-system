@@ -44,8 +44,10 @@ class Guest:
     """
     def print_reservation_history(self):
         string = ""
+        counter = 1
         list = []
         for reservation in self.get_previous_reservations():
+            string += "{}:    ".format(counter)
             list.append(reservation.room_type)
             list.append("Check in: " + str(reservation.start_date))
             list.append("Check out: " + str(reservation.end_date))
@@ -54,6 +56,7 @@ class Guest:
             string += "\n"
             string += "\n"
             list = []
+            counter += 1
         return string
 
     def remove_reservation(self, reservation):

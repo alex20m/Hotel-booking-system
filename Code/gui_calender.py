@@ -325,15 +325,16 @@ class GUICalender(QtWidgets.QMainWindow):
         self.container_layout.addWidget(self.confirm_button)
 
     def update_confirm(self):
-        self.confirmation_label.setText("Confirm reservation details")
-        self.room_label.setText("Room type: " + str(self.room_type))
-        self.start_label.setText("Check-in: " + str(self.start_date))
-        self.end_label.setText("Check-out: " + str(self.end_date))
-        self.price_label_2.setText("Price of stay {}€".format(self.price))
+        if self.label.text() == "Check-in and check-out dates selected":
+            self.confirmation_label.setText("Confirm reservation details")
+            self.room_label.setText("Room type: " + str(self.room_type))
+            self.start_label.setText("Check-in: " + str(self.start_date))
+            self.end_label.setText("Check-out: " + str(self.end_date))
+            self.price_label_2.setText("Price of stay {}€".format(self.price))
 
-        self.name_label.setText("Name: " + self.name)
-        self.phone_label.setText("Phone number: " + self.phone_nr)
-        self.email_label.setText("Email: " + self.email)
+            self.name_label.setText("Name: " + self.name)
+            self.phone_label.setText("Phone number: " + self.phone_nr)
+            self.email_label.setText("Email: " + self.email)
 
     def standard_confirm(self):
         self.confirmation_label.setText("Please enter booking details")
@@ -341,6 +342,9 @@ class GUICalender(QtWidgets.QMainWindow):
         self.start_label.setText("")
         self.end_label.setText("")
         self.price_label_2.setText("")
+        self.name_label.setText("")
+        self.phone_label.setText("")
+        self.email_label.setText("")
 
     def get_input(self):
         self.name_input.textChanged.connect(self.name_input_changed)
