@@ -19,6 +19,7 @@ class Reservations:
     def get_reservation_length(self):
         return (self.end_date - self.start_date).days
 
+    #Returns the price of a reservation
     def get_price(self, start_date, end_date, room_type):
 
         if room_type == "Cheap room":

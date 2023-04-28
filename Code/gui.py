@@ -30,6 +30,9 @@ class GUI(QtWidgets.QMainWindow):
         self.buttons()
         self.show()
 
+    """
+    Centers the window
+    """
     def center(self):
         screen = QApplication.primaryScreen()
         screen_geometry = screen.geometry()
@@ -38,6 +41,9 @@ class GUI(QtWidgets.QMainWindow):
         y = (screen_geometry.height() - self.height()) // 2
         self.move(x, y)
 
+    """
+    Creates the buttons for the window
+    """
     def buttons(self):
 
         label = QLabel("Alex Hotel")
@@ -83,6 +89,9 @@ class GUI(QtWidgets.QMainWindow):
     def remove_reservation(self):
         self.remove_window = GUIRemove(self.hotel)
 
+    """
+    Resizes the background image after the window size has been changed
+    """
     def resizeEvent(self, event):
         self.palette.setBrush(QPalette.ColorRole.Window, QBrush(self.pixmap.scaled(self.size(), aspectRatioMode=Qt.AspectRatioMode.KeepAspectRatioByExpanding)))
         self.setPalette(self.palette)

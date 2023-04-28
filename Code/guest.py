@@ -18,6 +18,9 @@ class Guest:
     def get_name(self):
         return self.name
 
+    """
+    Reads previous reservations from the file and saves them in a guest specific list with all of the guests reservation
+    """
     def read_previous_guest_reservations(self, filename):
         list = []
         file = open(filename, "r")
@@ -35,6 +38,9 @@ class Guest:
     def get_previous_reservations(self):
         return self.guest_reservations
 
+    """
+    Creates a new reservtion object and ads it to the guests reservation list.
+    """
     def add_reservation(self, check_in, check_out, room_type, comments):
         reservation = Reservations(self, check_in, check_out, room_type, comments)
         self.guest_reservations.append(reservation)
@@ -59,6 +65,9 @@ class Guest:
             counter += 1
         return string
 
+    """
+    Removes a reservation from the guests reservation list
+    """
     def remove_reservation(self, reservation):
         container_list = []
         for guest_reservation in self.guest_reservations:

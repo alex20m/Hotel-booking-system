@@ -29,6 +29,7 @@ class GUIRemove(QtWidgets.QMainWindow):
 
         self.showMaximized()
 
+    #Gets info from the user
     def get_info(self):
         font = QFont()
         font.setPointSize(25)
@@ -66,6 +67,7 @@ class GUIRemove(QtWidgets.QMainWindow):
         self.scroll_area.setWidgetResizable(True)
         self.main_layout.addWidget(self.scroll_area)
 
+    #Called when confirmed is clicked
     def confirmed_nr(self):
         phone_nr = self.phone_input.text()
         if phone_nr in self.hotel.hotel_guests:
@@ -77,6 +79,7 @@ class GUIRemove(QtWidgets.QMainWindow):
             self.cancel_button.setText("")
             self.empty_area()
 
+    #Makes the area from where the user chooses which reservations to remove
     def choose_area(self, phone_nr):
         self.label_list = []
         container_widget = QWidget()
@@ -119,6 +122,7 @@ class GUIRemove(QtWidgets.QMainWindow):
         container_widget = QWidget()
         self.scroll_area.setWidget(container_widget)
 
+    #Makes the cancel button
     def cancel(self):
         font = QFont()
         font.setPointSize(25)
@@ -127,6 +131,7 @@ class GUIRemove(QtWidgets.QMainWindow):
         self.main_layout.addWidget(self.cancel_button)
         self.cancel_button.clicked.connect(self.cancel_confirmed)
 
+    #Called when canceled is pressed
     def cancel_confirmed(self):
         checked = 0
         if self.info_label.text() != "Guest not found" and self.info_label.text() != "":
@@ -144,6 +149,7 @@ class GUIRemove(QtWidgets.QMainWindow):
             if checked != 0:
                 self.cancel_successful()
 
+    #Makes the canceled successfull popup window
     def cancel_successful(self):
         self.close()
 
@@ -170,6 +176,7 @@ class GUIRemove(QtWidgets.QMainWindow):
 
         self.widget.show()
 
+    #Centers the popup window
     def center(self, label):
         screen = QApplication.primaryScreen()
         screen_geometry = screen.geometry()
@@ -177,7 +184,3 @@ class GUIRemove(QtWidgets.QMainWindow):
         x = (screen_geometry.width() - label.width()) // 2
         y = (screen_geometry.height() - label.height()) // 2
         label.move(x, y)
-
-    def closeEvent(self, event: QCloseEvent) -> None:
-        from gui import GUI
-        gui = GUI(self.hotel)

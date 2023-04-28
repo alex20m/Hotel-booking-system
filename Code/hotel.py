@@ -21,6 +21,7 @@ class Hotel:
         self.filename = filename
         self.hotel_reservations = self.read_previous_reservations(filename)
 
+    #Reads the previous reservations from the text file and saves them in a list
     def read_previous_reservations(self, filename):
         try:
             hotel_reservations = []
@@ -46,6 +47,7 @@ class Hotel:
         except OSError:
             return False
 
+    #Checks if a room is available
     def check_availability(self, start_date, end_date, room_type):
         for reservation in self.hotel_reservations:
             if reservation[3] == room_type:
@@ -57,6 +59,7 @@ class Hotel:
                     return False
         return True
 
+    #Returns a string with all of the reservations in a given interval
     def print_reservations_in_interval(self, start_date, end_date):
         list = []
         counter = 1
@@ -102,18 +105,20 @@ class Hotel:
         else:
             return False
 
+    #Writes a successful reservation to the text file
     def write_reservations_to_file(self, phone_nr, name, email, start_date, end_date, room_type, comments, filename):
-
         with open(filename, "a") as file:
             string = "{};{};{};{};{};{};{}\n".format(phone_nr, name, email, start_date, end_date, room_type, comments)
             file.write(string)
 
+    #Returns all of a guests reservations
     def get_guest_reservations(self, phone_nr):
         if phone_nr in self.hotel_guests:
             return self.hotel_guests[phone_nr].get_previous_reservations()
         else:
             return False
 
+    #Removes a reservation from the system
     def remove_reservation(self, guest, remove_start, remove_end, remove_room):
         string = ""
         container_list = []

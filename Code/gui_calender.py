@@ -76,6 +76,7 @@ class GUICalender(QtWidgets.QMainWindow):
         self.choose_date_range()
         self.get_input()
 
+    #Creates the calendar
     def make_calendar(self):
 
         font = QFont()
@@ -108,6 +109,7 @@ class GUICalender(QtWidgets.QMainWindow):
 
         self.container_layout.addWidget(self.price_label)
 
+    #Creates the scrollable area in the window
     def make_window(self):
         self.scroll_area = QScrollArea()
         self.scroll_area.setWidgetResizable(True)
@@ -115,6 +117,7 @@ class GUICalender(QtWidgets.QMainWindow):
         self.scroll_area.setWidget(self.container_widget)
         self.main_layout.addWidget(self.scroll_area)
 
+    #Paints cells in a interval a specific color
     def paint_calendar(self, start_date, end_date, color):
         format = QTextCharFormat()
         format.setBackground(QColor(color))
@@ -122,10 +125,12 @@ class GUICalender(QtWidgets.QMainWindow):
             self.calendar.setDateTextFormat(start_date, format)
             start_date += timedelta(days=1)
 
+    #Checks buttons clicked
     def choose_date_range(self):
         self.calendar.selectionChanged.connect(self.set_range)
         self.confirm_button.clicked.connect(self.confirm_clicked)
 
+    #Chooses the range of dates from the users clicks
     def set_range(self):
         self.price_label.setText("")
         self.standard_confirm()
@@ -173,6 +178,7 @@ class GUICalender(QtWidgets.QMainWindow):
             self.price_label.setText("Price of stay: {}€".format(self.price))
             self.update_confirm()
 
+    #Function for when the confirmed button is clicked
     def confirm_clicked(self):
         if self.label.text() == "Check-in and check-out dates selected":
             if self.name != "" and self.phone_nr != "" and self.email != "":
@@ -203,6 +209,7 @@ class GUICalender(QtWidgets.QMainWindow):
 
                 self.widget.show()
 
+    #Checks if the selected dates are available
     def dates_not_available(self):
         self.standard_settings()
         self.standard_confirm()
@@ -232,6 +239,7 @@ class GUICalender(QtWidgets.QMainWindow):
             if self.room_type == room_type:
                 self.paint_calendar(check_in, check_out, self.transparent_red)
 
+    #Makes the calenar back to standard settings
     def standard_settings(self):
         self.start_set = False
         self.end_set = False
@@ -243,8 +251,8 @@ class GUICalender(QtWidgets.QMainWindow):
         end_date = date(2100, 1, 1)
         self.paint_calendar(start_date, end_date, self.standard_color)
 
+    #Makes the info section at the bottom of the window
     def make_info(self):
-
         font = QFont()
         font.setPointSize(26)
 
@@ -272,6 +280,7 @@ class GUICalender(QtWidgets.QMainWindow):
         self.container_layout.addWidget(self.comments_input)
         comments_label.setFont(font)
 
+    #Makes the layout for the info section
     def confirmation(self):
 
         font = QFont()
@@ -324,6 +333,7 @@ class GUICalender(QtWidgets.QMainWindow):
         self.confirm_button.setFont(font)
         self.container_layout.addWidget(self.confirm_button)
 
+    #Updates the check confirmation boxes for the user
     def update_confirm(self):
         if self.label.text() == "Check-in and check-out dates selected":
             self.confirmation_label.setText("Confirm reservation details")
@@ -336,6 +346,7 @@ class GUICalender(QtWidgets.QMainWindow):
             self.phone_label.setText("Phone number: " + self.phone_nr)
             self.email_label.setText("Email: " + self.email)
 
+    #Sets the confirmation boxes back to standard
     def standard_confirm(self):
         self.confirmation_label.setText("Please enter booking details")
         self.room_label.setText("")
@@ -346,6 +357,7 @@ class GUICalender(QtWidgets.QMainWindow):
         self.phone_label.setText("")
         self.email_label.setText("")
 
+    #Gets input from the user
     def get_input(self):
         self.name_input.textChanged.connect(self.name_input_changed)
         self.phone_input.textChanged.connect(self.phone_input_changed)
@@ -368,6 +380,7 @@ class GUICalender(QtWidgets.QMainWindow):
         text = self.comments_input.toPlainText()
         self.comments = text
 
+    #Used to center the popup window in the screen
     def center(self, window):
         screen = QApplication.primaryScreen()
         screen_geometry = screen.geometry()

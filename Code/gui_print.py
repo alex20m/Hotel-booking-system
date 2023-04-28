@@ -45,10 +45,12 @@ class GUIPrint(QtWidgets.QMainWindow):
 
         self.showMaximized()
 
+    #Called when printing hotel reservations
     def print_hotel(self):
         self.make_calender()
         self.make_window("")
 
+    #Called when printing guest reservations
     def print_guest(self):
         font = QFont()
         font.setPointSize(25)
@@ -75,6 +77,7 @@ class GUIPrint(QtWidgets.QMainWindow):
 
         self.guest_confirm.clicked.connect(self.confirmed_nr)
 
+    #Makes the window with the scrollable area with a text thats the parameter
     def make_window(self, string):
 
         # We make a scrollable area if the text is long
@@ -99,6 +102,7 @@ class GUIPrint(QtWidgets.QMainWindow):
     def phone_input_changed(self, text):
         self.phone_nr = text
 
+    #Called when guest clicks on confirm
     def confirmed_nr(self):
         self.guest = None
 
@@ -114,6 +118,7 @@ class GUIPrint(QtWidgets.QMainWindow):
 
         self.make_window(string)
 
+    #Makes the small calender and info about what to input
     def make_calender(self):
         self.start_date = None
         self.end_date = None
@@ -174,6 +179,7 @@ class GUIPrint(QtWidgets.QMainWindow):
         selected_date = self.date_end.date()
         self.end_date = selected_date
 
+    #Gets all of the reservations in the chosen interval
     def confirmed_interval(self):
         string = ""
         if self.start_date != None and self.end_date != None:
