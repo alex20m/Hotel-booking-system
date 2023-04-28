@@ -80,7 +80,7 @@ class TestReservations(unittest.TestCase):
         start_date = date(2023, 3,12)
         end_date = date(2023, 3, 16)
         retval = hotel.print_reservations_in_interval(start_date, end_date)
-        self.assertEqual(retval, "Phone nr: 112,    Name: Alex,    Email: email@test.com,    Room type: Cheap room,    Check-in: 2023-03-10,    Check-out: 2023-03-15,    Comments: -\n\n")
+        self.assertEqual(retval, "1:    Phone nr: 112,    Name: Alex,    Email: email@test.com,    Room type: Cheap room,    Check-in: 2023-03-10,    Check-out: 2023-03-15,    Comments: -\n\n")
 
     """
     The function below needs to be run independently, otherwise it disrupts the other tests when it writes to the test text file.
@@ -104,7 +104,7 @@ class TestReservations(unittest.TestCase):
 
         guest = Guest("Alex", "112", "alex.mecklin@hotmail.com", "hotel_reservations_test")
         retval = guest.print_reservation_history()
-        str = "Cheap room,    Check in: 2023-03-10,    Check out: 2023-03-15,    Comments: -\n\n"
+        str = "1:    Cheap room,    Check in: 2023-03-10,    Check out: 2023-03-15,    Comments: -\n\n"
         self.assertEqual(retval, str)
 
 
