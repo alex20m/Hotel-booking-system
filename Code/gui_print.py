@@ -82,8 +82,6 @@ class GUIPrint(QtWidgets.QMainWindow):
 
         # We make a scrollable area if the text is long
         # The text should be read only
-        # We also change the font so that is is big enough
-
         self.text_edit = QTextEdit()
         self.text_edit.setPlainText(string)
         self.scroll_area.setWidget(self.text_edit)
@@ -91,11 +89,6 @@ class GUIPrint(QtWidgets.QMainWindow):
         font = QFont()
         font.setPointSize(18)
         self.text_edit.setFont(font)
-
-        # We then make a toolbar with a search bar so the user can search for things instead of just scroll
-        # Not working yet
-
-        #self.addToolBar(self.toolbar)
 
         self.main_layout.addWidget(self.scroll_area)
 
