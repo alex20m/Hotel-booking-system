@@ -1,33 +1,27 @@
-# Y2_2023_07666_Reservation_System
+# Reservation System
 
-## Checkpoint2
+## Introduction
 
-## Current properties
+The program is a reservation system for a hotel. The program can be used to make reservations, remove reservations, 
+check a guests reservations and check all of the hotels reservations within an interval. As the program can be used
+to check other guests reservations, the program is meant to be used by hotel personnel, for example a receptionist, 
+who handles the reservations. 
 
-The program is now fully working with almost all of the implementations that I planned to implement. The GUI
- is also working and is designed in a way that looks good and easy to use for the user. The only feature 
-left to implement is the unique part of the program, which will either be an option to remove a booking or 
-a search bar so the user can search for a specific resevration after printing all of a guest/hotels reservations.
-The program can take reservations and can also print all of a guests reservations or all of the hotels reservations
-within a time interval.
+## File and directory structure
 
-I also have 10 different unittests to test different sections of my program.
+  - The project has two directories, one for the files the program uses, like code files and text files, and one
+    directory for the projects documentation, like the project plan and the final documentation
+  - There is no code that someone else has written
 
+## Installation instructions
 
-## Instructions
+  - The program requires the PyQt6 and datetime libraries
+  - Installation of PyQt6 like normal and the datetime library is imported
 
-It is possible to run the program from the main function and the program and GUI is fully functional.
+## User instructions
 
-When the program starts it always starts with reading the files and saving the previous reservations in lists or
-dictionaries. When a reservation is successfully made it is being written into the files and into the dictionary. 
-The program has one file with all of the hotels reservations written with all the necessary info.
+  - The program is executed by running the main.py file
+  - After running the program it tells the user what to do, no instructions are needed before using the program
+  - No commands from the command line are necessary
+  - The program doesn't use any setup files
 
-## Schedule
-
-I am not sure how many hours I have spent on the project altogether but maybe about 30 hours so far. 
-I have not made any changes to the schedule of my project plan.
-## Other
-
-I have not had any specific problems, although I had some problems with getting the calendar to work like I wanted
-it to. My plan has change a bit, but it's mostly the UML plan that has changed. New functions have been added and 
-some have been removed or moved to another class.
