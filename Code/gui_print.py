@@ -176,7 +176,10 @@ class GUIPrint(QtWidgets.QMainWindow):
     def confirmed_interval(self):
         string = ""
         if self.start_date != None and self.end_date != None:
-            string = self.hotel.print_reservations_in_interval(self.start_date, self.end_date)
+            if self.end_date > self.start_date:
+                string = self.hotel.print_reservations_in_interval(self.start_date, self.end_date)
+            else:
+                string = "Please choose end date after start date"
             if string == "":
                 string = "No reservations in interval"
 
